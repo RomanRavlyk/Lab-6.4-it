@@ -11,9 +11,10 @@ void ModArray(int a[], int size, int aval, int bval);
 
 int main() {
     srand((unsigned)time(NULL));
-    int n = 5;
+    int n;
+    cout << "n: "; cin >> n;
     int* p = new int[n];
-    generateArray(p, 5, -10, 10);
+    generateArray(p, n, -10, 10);
 
 
     cout << "Array Elements: ";
