@@ -1,50 +1,49 @@
 #include <iostream>
 #include <cmath>
 #include <random>
+#include <iomanip>
 using namespace std;
 
 void printArray(int* array, int size);
 void generateArray(int* arr, int size, int min, int max);
-int MaxElement(int a[], const int size);
-int Sum(int a[], const int size);
-void ModArray(int a[], int size, int aval, int bval);
+int multPairElements(int* arr, int size, int multOfPairElemets);
+void printModifiedArray(int* array, int size);
+int sumOfArrayElements(int* arr, int size, int sum);
+void QuickSort(int* arr, int left, int right);
+void swap(int& a, int& b);
 
 int main() {
-    srand((unsigned)time(NULL));
+    srand(static_cast<unsigned int>(time(nullptr)));
     int n;
     cout << "n: "; cin >> n;
     int* p = new int[n];
     generateArray(p, n, -10, 10);
 
-
-    cout << "Array Elements: ";
+    cout << "ArrayElements:                      ";
     printArray(p, n);
     cout << endl;
 
-    cout << "MaxNumber: ";
-    int max = MaxElement(p, n);
-    cout << max << endl;
+    int multipleOfPairElements = multPairElements(p, n, 1);
+    cout << "Multiply of pair elements in array: " << multipleOfPairElements << endl;
+    
 
-    int NewSum = Sum(p, n);
-    cout << "Start Sum: " << NewSum << endl;
-
-    int fnum, snum;
-
-    cout << "type num: ";  cin >> fnum;
-    cout << "type second num: ";  cin >> snum;
-
-    ModArray(p, n, fnum, snum);
-    cout << "\nModified: ";
-
-    printArray(p, n);
-
+    int Sum = sumOfArrayElements(p, n, 0);
+    cout << "Sum of array elements             : " << Sum;
+    cout << endl;
+   
+    
+    cout << "Sorted Array: ";
+    QuickSort(p, 0, n - 1);
+    printModifiedArray(p, n);
+    
+    delete[] p;
     return 0;
-}
+ }
 
 
 void printArray(int* array, int size) {
     for (int i = 0; i < size; i++) {
-        printf("%d ", array[i]);
+        cout << setw(2) << array[i] << " ";
     }
 }
 
@@ -55,53 +54,63 @@ void generateArray(int* arr, int size, int min, int max) {
     }
 }
 
-int MaxElement(int a[], const int size) {
-    if (size == 0) {
-        return 0;
+void printModifiedArray(int* arr, int size) {
+    for (int i = 0; i < size; i++) {
+        cout << setw(2) << arr[i] << " ";
     }
-
-    int max = a[0];
-
-    for (int i = 1; i < size; i++) {
-        if (a[i] > max) {
-            max = a[i];
-        }
-    }
-
-    return max;
+    cout << endl;
 }
 
-int Sum(int a[], const int size) {
-    int sum = 0;
-    int index = -1;
-
+int multPairElements(int* arr, int size, int multOfPairElemets) {
     for (int i = 0; i < size; i++) {
-        if (a[i] > 0) {
-            index = i;
+        if (i != 0 && i % 2 == 0) {
+            multOfPairElemets *= arr[i];
         }
-        if (index == -1) {
-            sum += a[i];
+        if (arr[i] == 0) {
+            return 1;
         }
     }
+    return multOfPairElemets;
+}
 
+int sumOfArrayElements (int *arr, int size, int sum) {
+    for (int i = 0; i < size; i++) {
+        if (i != 0 && i != size - 1) {
+            sum += arr[i];
+        }
+    }
     return sum;
 }
 
-void ModArray(int a[], int size, int aVal, int bVal) {
-    int newSize = size;
-    for (int i = 0; i < newSize; i++) {
-        if (abs(a[i]) >= aVal && abs(a[i]) <= bVal) {
-            for (int j = i; j < newSize - 1; j++) {
-                a[j] = a[j + 1];
-            }
-            newSize--;
-            i--;
+
+
+void QuickSort(int* arr, int left, int right) {
+    int i = left, j = right;
+    int p = arr[(left + right) / 2];
+
+
+    while (i <= j) {
+        while (arr[i] < p)
+            i++;
+        while (arr[j] > p)
+            j--;
+        if (i <= j) {
+            swap(arr[i], arr[j]);
+            i++;
+            j--;
         }
     }
 
-    for (int i = newSize; i < size; i++) {
-        a[i] = 0;
-    }
 
-    size = newSize;
+    if (left < j)
+        QuickSort(arr, left, j);
+    if (i < right)
+        QuickSort(arr, i, right);
 }
+
+void swap(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
