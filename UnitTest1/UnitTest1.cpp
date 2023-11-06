@@ -10,15 +10,18 @@ namespace UnitTest1
     public:
         TEST_METHOD(TestMethod3)
         {
-            int n = 10;
-            int* p = new int[n];
-            int newSize = n;
-            int min = -11;
-            int max = 13;
-            int aVal = 1, bVal = 10;
-            generateArray(p, n, min, max);
-            ModArray(p, newSize, aVal, bVal);
-            Assert::AreEqual(0, Sum(p, newSize), 0.0001);
+            int a[10] = { -8, 2, -10, 2, -6, -1, 3, 3, -5, -9 };
+            int S = 0;
+            int c = sumOfArrayElements(a, 10, S);
+            Assert::AreEqual(c, -12);
+        }
+
+        TEST_METHOD(TestMethod4)
+        {
+            int a[10] = { -8, 2, -10, 2, -6, -1, 3, 3, -5, -9 };
+            int P = 1;
+            int c = multPairElements(a, 10, P);
+            Assert::AreEqual(c, -900);
         }
     };
 }

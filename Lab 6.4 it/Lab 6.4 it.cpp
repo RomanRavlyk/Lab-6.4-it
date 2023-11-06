@@ -25,20 +25,20 @@ int main() {
 
     int multipleOfPairElements = multPairElements(p, n, 1);
     cout << "Multiply of pair elements in array: " << multipleOfPairElements << endl;
-    
+
 
     int Sum = sumOfArrayElements(p, n, 0);
     cout << "Sum of array elements             : " << Sum;
     cout << endl;
-   
-    
+
+
     cout << "Sorted Array: ";
     QuickSort(p, 0, n - 1);
     printModifiedArray(p, n);
-    
+
     delete[] p;
     return 0;
- }
+}
 
 
 void printArray(int* array, int size) {
@@ -73,7 +73,7 @@ int multPairElements(int* arr, int size, int multOfPairElemets) {
     return multOfPairElemets;
 }
 
-int sumOfArrayElements (int *arr, int size, int sum) {
+int sumOfArrayElements(int* arr, int size, int sum) {
     for (int i = 0; i < size; i++) {
         if (i != 0 && i != size - 1) {
             sum += arr[i];
@@ -113,4 +113,3 @@ void swap(int& a, int& b) {
     a = b;
     b = temp;
 }
-
