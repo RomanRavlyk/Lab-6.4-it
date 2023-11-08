@@ -6,10 +6,10 @@ using namespace std;
 
 void printArray(int* array, int size);
 void generateArray(int* arr, int size, int min, int max);
-int multPairElements(int* arr, int size, int multOfPairElemets);
+int multPairElements(int* arr, int size);
 void printModifiedArray(int* array, int size);
 int sumOfArrayElements(int* arr, int size, int sum);
-void QuickSort(int* arr, int left, int right);
+void QuickSortModified(int* arr, int left, int right);
 void swap(int& a, int& b);
 
 int main() {
@@ -19,11 +19,11 @@ int main() {
     int* p = new int[n];
     generateArray(p, n, -10, 10);
 
-    cout << "ArrayElements:                      ";
+    cout << "ArrayElements                     : ";
     printArray(p, n);
     cout << endl;
 
-    int multipleOfPairElements = multPairElements(p, n, 1);
+    int multipleOfPairElements = multPairElements(p, n);
     cout << "Multiply of pair elements in array: " << multipleOfPairElements << endl;
 
 
@@ -31,9 +31,10 @@ int main() {
     cout << "Sum of array elements             : " << Sum;
     cout << endl;
 
+    QuickSortModified(p, 0, n - 1);
+    cout << "Sorted Array                      : ";
+    
 
-    cout << "Sorted Array: ";
-    QuickSort(p, 0, n - 1);
     printModifiedArray(p, n);
 
     delete[] p;
@@ -61,13 +62,14 @@ void printModifiedArray(int* arr, int size) {
     cout << endl;
 }
 
-int multPairElements(int* arr, int size, int multOfPairElemets) {
+int multPairElements(int* arr, int size) {
+    int multOfPairElemets = 1;
     for (int i = 0; i < size; i++) {
-        if (i != 0 && i % 2 == 0) {
-            multOfPairElemets *= arr[i];
-        }
         if (arr[i] == 0) {
-            return 1;
+            arr[i] = 1; 
+        }
+        if (i % 2 == 0) {
+            multOfPairElemets *= arr[i];
         }
     }
     return multOfPairElemets;
@@ -83,29 +85,29 @@ int sumOfArrayElements(int* arr, int size, int sum) {
 }
 
 
-
-void QuickSort(int* arr, int left, int right) {
+void QuickSortModified(int* arr, int left, int right) {
     int i = left, j = right;
-    int p = arr[(left + right) / 2];
-
+    int pivot = arr[(left + right) / 2];
+    int temp; // Змінна для обміну
 
     while (i <= j) {
-        while (arr[i] < p)
+        while (arr[i] > pivot) // Пошук першого додатнього елемента
             i++;
-        while (arr[j] > p)
+        while (arr[j] < pivot) // Пошук першого від'ємного елемента
             j--;
         if (i <= j) {
-            swap(arr[i], arr[j]);
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
             i++;
             j--;
         }
     }
 
-
     if (left < j)
-        QuickSort(arr, left, j);
+        QuickSortModified(arr, left, j);
     if (i < right)
-        QuickSort(arr, i, right);
+        QuickSortModified(arr, i, right);
 }
 
 void swap(int& a, int& b) {
